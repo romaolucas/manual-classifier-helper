@@ -4,7 +4,7 @@ from .models import Tweet, Review
 from .forms import ReviewForm
 
 def index(request):
-    return render(request, 'classification/index.html', {})
+    return render(request, 'classification/index.html', None)
 
 def review(request, tweets_to_review):
     ReviewFormset = formset_factory(ReviewForm, extra=tweets_to_review)
