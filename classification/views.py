@@ -6,8 +6,8 @@ from .forms import ReviewForm
 def index(request):
     return render(request, 'classification/index.html', None)
 
-def review(request, tweets_to_review):
-    ReviewFormset = formset_factory(ReviewForm, extra=tweets_to_review)
+def review(request):
+    ReviewFormset = formset_factory(ReviewForm, extra=0)
     if request.method == 'POST':
         review_formset = ReviewFormset(request.POST)
         for review_form in review_formset:
@@ -20,7 +20,8 @@ def review(request, tweets_to_review):
             user_review.ironic = ironic
             user_review.save()
     else:
-        tweets_to_review = Tweet.objects.filter(review__isnull=True)
+        tweets_amount = request.GET['tweets_amount']
+        tweets_to_review = Tweet.objects.filter(review__isnull=True)[:tweets_amount]
         initial_values = [{'tweet': tweet.pk, 'tweet_text': tweet.tweet_text} for tweet in tweets_to_review]
         review_formset = ReviewFormset(initial=initial_values)
     context = {'review_formset': review_formset}

@@ -3,10 +3,10 @@
 {% block title %}Bem vindo ao classificador de Tweets{% endblock %}
 
 {% block content %}
-<form method='GET' action='review'>
+<form method='GET' action='review/'>
     <div class="form-group">
         <label for="tweets-to-be-reviewed">Quantos tweets você deseja classificar? </label>
-        <input type="number" class="form-control" value="100" id="tweets-amount" name="tweets-amount" />
+        <input type="number" class="form-control" value="100" id="tweets_to_review" name="tweets_to_review" />
     </div>
     <button type="submit" class="btn btn-default">Enviar</button>
 </form>

@@ -6,7 +6,7 @@ class ReviewForm(forms.Form):
             (0, 'Neutro'),
             (-1, 'Negativo')
             )
-    review = forms.ChoiceField(choices=review_choices, required=True, label='Opinião do tweet')
-    ironic = forms.BooleanField(required=False, label='É irônico?')
+    review = forms.ChoiceField(choices=review_choices, required=True, label='Opinião do tweet', widget=forms.RadioSelect(attrs={'class': 'form-control'}))
+    ironic = forms.BooleanField(required=False, label='É irônico?', widget=forms.CheckboxInput(attrs={'class': 'form-control'}))
     tweet = forms.IntegerField(widget=forms.HiddenInput())
-    tweet_text = forms.CharField(widget=forms.Textarea(attrs={'disabled': 'disabled'}))
+    tweet_text = forms.CharField(widget=forms.Textarea(attrs={'disabled': 'disabled', 'class': 'form-control'}))
