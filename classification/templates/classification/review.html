@@ -12,15 +12,15 @@
         {% for review_form in review_formset %}
             <li class="list-group-item">
                 <div class="form-group">
-                    {{ form.tweet }}
-                    {{ form.tweet_text.label_tag }}
-                    {{ form.tweet_text }}
+                    {{ review_form.tweet }}
+                    {{ review_form.tweet_text.label_tag }}
+                    {{ review_form.tweet_text }}
                 </div>
                 <div class ="form-group">
-                    {{ form.review.label_tag }}
-                    {{ form.review }}
-                    {{ form.ironic.label_tag }}
-                    {{ form.ironic }}
+                    {{ review_form.review.label_tag }}
+                    {{ review_form.review }}
+                    {{ review_form.ironic.label_tag }}
+                    {{ review_form.ironic }}
                 </div>
             </li>
         {% endfor %}
