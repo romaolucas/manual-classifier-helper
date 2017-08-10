@@ -20,9 +20,9 @@ def review(request):
             user_review.ironic = ironic
             user_review.save()
     else:
-        tweets_amount = request.GET['tweets_amount']
+        tweets_amount = int(request.GET['tweets_amount'])
         tweets_to_review = Tweet.objects.filter(review__isnull=True)[:tweets_amount]
         initial_values = [{'tweet': tweet.pk, 'tweet_text': tweet.tweet_text} for tweet in tweets_to_review]
         review_formset = ReviewFormset(initial=initial_values)
-    context = {'review_formset': review_formset}
-    return render(request, 'classification/review.html', context)
+        context = {'review_formset': review_formset}
+        return render(request, 'classification/review.html', context)
