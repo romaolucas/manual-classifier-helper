@@ -16,11 +16,20 @@
                     {{ review_form.tweet_text.label_tag }}
                     {{ review_form.tweet_text }}
                 </div>
-                <div class ="form-group">
-                    {{ review_form.review.label_tag }}
-                    {{ review_form.review }}
-                    {{ review_form.ironic.label_tag }}
-                    {{ review_form.ironic }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ review_form.opinion.label_tag }}
+                        {% for review_opinion in review_form.review %}
+                            <label class="radio-inline" for="{{ review_opinion.id_for_label }}">
+                                {{ review_opinion.tag }}
+                                {{ review_opinion.choice_label }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        {{ review_form.ironic.label_tag }}
+                        {{ review_form.ironic }}
+                    </div>
                 </div>
             </li>
         {% endfor %}
