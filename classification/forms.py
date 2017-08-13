@@ -9,5 +9,5 @@ class ReviewForm(forms.Form):
     review = forms.ChoiceField(choices=review_choices, required=True, label='Opinião do tweet', widget=forms.RadioSelect())
     ironic = forms.BooleanField(required=False, label='É irônico?', widget=forms.CheckboxInput(attrs={'class': 'checkbox-inline'}))
     tweet = forms.IntegerField(label='Tweet', widget=forms.HiddenInput())
-    tweet_text = forms.CharField(label='Texto ', widget=forms.Textarea(attrs={'disabled': 'disabled', 
-        'class': 'form-control', 'rows': '4', 'cols': '10'}))
+    tweet_text = forms.CharField(required=False, label='Texto ', widget=forms.Textarea(attrs={'disabled': 'disabled', 
+        'class': 'form-control tweet-textarea', 'rows': '3', 'cols': '10'}))
