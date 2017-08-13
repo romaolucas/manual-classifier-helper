@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="panel panel-default">
-    <div class="panel-heading"> Tweets para classificar </div>
-<form method='POST' action='review/'>
+    <div class="panel-heading"><h1> Tweets para classificar </h1></div>
+    <form method='POST'>
     {% csrf_token %}
     {{ review_formset.management_form }}
     <ul class="list-group">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        {{ review_form.opinion.label_tag }}
+                        {{ review_form.opinion.label }}
                         {% for review_opinion in review_form.review %}
                             <label class="radio-inline" for="{{ review_opinion.id_for_label }}">
                                 {{ review_opinion.tag }}
@@ -34,7 +34,7 @@
             </li>
         {% endfor %}
     </ul>
-    <button type="submit" class="btn btn-default">Enviar </button>
+    <button type="submit" class="btn btn-primary btn-lg btn-form-submit">Enviar </button>
 </form>
 </div>
 {% endblock %}
