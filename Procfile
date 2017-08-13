@@ -1,1 +1,1 @@
-web: gunicorn classification.wsgi general.log
+web: gunicorn mchelper.wsgi general.log
