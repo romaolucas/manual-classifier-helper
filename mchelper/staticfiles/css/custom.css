@@ -1,0 +1,8 @@
+ul {
+    list-style-type: none;  
+}
+
+textarea:disabled {
+    background-color: white;
+    border: none;
+}
