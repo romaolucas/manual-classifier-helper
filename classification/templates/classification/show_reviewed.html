@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Tweets já classificados
+{% endblock %}
+
+{% block content %}
+<table>
+    <thead>
+        <th>Username</th>
+        <th>Texto</th>
+        <th>Opinião</th>
+    </thead>
+    <tbody>
+        {% for tweet in reviewed_tweets %}
+            <tr>
+                <td>
+                    {{ tweet.tweet_username }}
+                </td>
+                <td>
+                    {{ tweet.tweet_text }}
+                </td>
+                <td>
+                    {{ tweet.review_set.all.0.get_review_display }}
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

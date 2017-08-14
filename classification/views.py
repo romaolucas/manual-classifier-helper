@@ -25,7 +25,7 @@ def review(request):
                         review=review,
                         ironic=ironic
                 )
-            return redirect('show_reviewed')    
+            return redirect('all-reviewed')    
         else:
             context = {'review_formset': review_formset}
             return render(request, 'classification/review.html', context)
