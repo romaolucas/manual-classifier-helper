@@ -1,1 +1,1 @@
-web: gunicorn mchelper.wsgi general.log
+web: gunicorn mchelper.wsgi --log-file=-

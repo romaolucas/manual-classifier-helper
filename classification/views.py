@@ -1,10 +1,10 @@
+import logging
+import csv
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.forms import formset_factory
 from .models import Tweet, Review
 from .forms import ReviewForm
-import logging
-
-logger = logging.getLogger(__name__)
 
 def index(request):
     return render(request, 'classification/index.html', None)
@@ -46,13 +46,15 @@ def generate_csv(request):
     '''
         TODO: refatorar esse metodo para tirar o if do for, fazer isso antes de deployar pra valer
     '''
-    import csv
-    from django.http import HttpResponse
+    logger = logging.getLogger('testlogger')
+    logger.info("gerando csv")
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="tweets_classificados.csv"'
-    writer = csv.DictWriter(response, ['username', 'tweet', 'review'])
+    writer = csv.writer(response)
+    writer.writerow(['username', 'tweet', 'review'])
     reviewed_tweets = Tweet.objects.filter(review__isnull=False)
     for tweet in reviewed_tweets:
         if not tweet.review_set.all()[0].is_ironic():
-            writer.writerow({'username': tweet.tweet_username, 'tweet': tweet.tweet_text, 'review': tweet.review_set.all()[0].review})
-    return response        
+            writer.writerow([tweet.tweet_username, tweet.tweet_text, tweet.review_set.all()[0].review])
+    logger.info("csv gerado!")
+    return response 
