@@ -25,7 +25,7 @@ def review(request):
                         review=review,
                         ironic=ironic
                 )
-            return redirect('all-reviewed')    
+                return redirect('classification:all-reviewed')    
         else:
             context = {'review_formset': review_formset}
             return render(request, 'classification/review.html', context)
@@ -41,3 +41,18 @@ def all_reviewed(request):
     reviewed_tweets = Tweet.objects.filter(review__isnull=False)
     context = {'reviewed_tweets' : reviewed_tweets}
     return render(request, 'classification/show_reviewed.html', context)
+
+def generate_csv(request):
+    '''
+        TODO: refatorar esse metodo para tirar o if do for, fazer isso antes de deployar pra valer
+    '''
+    import csv
+    from django.http import HttpResponse
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="tweets_classificados.csv"'
+    writer = csv.DictWriter(response, ['username', 'tweet', 'review'])
+    reviewed_tweets = Tweet.objects.filter(review__isnull=False)
+    for tweet in reviewed_tweets:
+        if not tweet.review_set.all()[0].is_ironic():
+            writer.writerow({'username': tweet.tweet_username, 'tweet': tweet.tweet_text, 'review': tweet.review_set.all()[0].review})
+    return response        

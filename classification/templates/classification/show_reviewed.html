@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block content %}
-<table>
+<a href="{% 'classification:generate-csv' %}">Exportar CSV com os tweets já classificados</a>
+
+<table class="table">
     <thead>
         <th>Username</th>
         <th>Texto</th>
