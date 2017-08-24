@@ -1,21 +1,22 @@
 import logging
 import csv
+import codecs
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.forms import formset_factory
 from .models import Tweet, Review
-from .forms import ReviewForm
+from .forms import ReviewForm, CSVUploadForm
 
 def index(request):
     return render(request, 'classification/index.html', None)
 
 def review(request):
     ReviewFormset = formset_factory(ReviewForm, extra=0)
+    logger = logging.getLogger('testlogger')
     if request.method == 'POST':
         review_formset = ReviewFormset(request.POST)
-        logger.info('opa')
         if review_formset.is_valid():
-            logger.info('ta tudo certo aqui')
+            logger.info('vou começar a registrar as opinioes')
             for review_form in review_formset:
                 tweet_id = review_form.cleaned_data.get('tweet')
                 review = review_form.cleaned_data.get('review')
@@ -25,7 +26,8 @@ def review(request):
                         review=review,
                         ironic=ironic
                 )
-                return redirect('classification:all-reviewed')    
+            logger.info('terminei de colocar as opinioes')
+            return redirect('classification:all-reviewed')    
         else:
             context = {'review_formset': review_formset}
             return render(request, 'classification/review.html', context)
@@ -58,3 +60,27 @@ def generate_csv(request):
             writer.writerow([tweet.tweet_username, tweet.tweet_text, tweet.review_set.all()[0].review])
     logger.info("csv gerado!")
     return response 
+
+def import_csv(request):
+    if request.method == 'POST':
+        logger = logging.getLogger('testlogger')
+        form = CSVUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            csvfile = request.FILES['csv_file']
+            csvfile.open()
+            reader = csv.DictReader(codecs.EncodedFile(csvfile, "utf-8"), delimiter=',')
+            logger.info("importando csv")
+            for row in reader:
+                try:
+                    tweet_id = int(row['id'])
+                except ValueError:
+                    tweet_id = 000000000
+                tweet = Tweet(tweet_id=tweet_id, tweet_username=row['username'], tweet_text=row['text'])
+                logger.info("criando o tweet")
+                tweet.save()
+            logger.info("importei tudo do csv")
+            return redirect('admin:index')
+    else:
+        form = CSVUploadForm()
+        context = {'form': form}
+        return render(request, 'admin/classification/upload_csv.html', context)

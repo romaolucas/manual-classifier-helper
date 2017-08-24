@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.csv_file.label }}
+        {{ form.csv_file }}
+    </form>
+
+{% endblock %}

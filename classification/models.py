@@ -5,6 +5,9 @@ class Tweet(models.Model):
     tweet_username = models.CharField(verbose_name='username', max_length=255)
     tweet_id = models.BigIntegerField(verbose_name='id do tweet')
 
+    def __str__(self):
+        return self.tweet_text
+
 class Review(models.Model):
     review = (
             (1, 'Positivo'),

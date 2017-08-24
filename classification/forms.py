@@ -11,3 +11,7 @@ class ReviewForm(forms.Form):
     tweet = forms.IntegerField(label='Tweet', widget=forms.HiddenInput())
     tweet_text = forms.CharField(required=False, label='Texto ', widget=forms.Textarea(attrs={'disabled': 'disabled', 
         'class': 'form-control tweet-textarea', 'rows': '3', 'cols': '10'}))
+
+
+class CSVUploadForm(forms.Form):
+    csv_file = forms.FileField(label='Arquivo csv (atenção, os elementos devem ser separados por virgula)')

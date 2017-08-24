@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<a download="tweets_classificados.csv" href="{% url 'classification:generate_csv' %}">Exportar CSV com os tweets já classificados</a>
+<a href="{% url 'classification:generate_csv' %}">Exportar CSV com os tweets já classificados</a>
 
 <table class="table">
     <thead>

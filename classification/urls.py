@@ -5,6 +5,7 @@ from . import views
 app_name = 'classification'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'admin/classification/tweet/import-csv', views.import_csv, name='import_tweets'),
     url(r'review/$', views.review, name='review_tweets'),
     url(r'reviewed/$', views.all_reviewed, name='all-reviewed'),
     url(r'^export/csv/$', views.generate_csv, name='generate_csv'),
