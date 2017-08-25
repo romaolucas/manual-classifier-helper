@@ -65,6 +65,7 @@ def import_csv(request):
     if request.method == 'POST':
         logger = logging.getLogger('testlogger')
         form = CSVUploadForm(request.POST, request.FILES)
+        logger.info("form {}".format(form))
         if form.is_valid():
             csvfile = request.FILES['csv_file']
             csvfile.open()
@@ -80,7 +81,10 @@ def import_csv(request):
                 tweet.save()
             logger.info("importei tudo do csv")
             return redirect('admin:index')
+        else:
+            return redirect('admin:index')
     else:
         form = CSVUploadForm()
-        context = {'form': form}
+        context = {'form': form,
+                    'opts': Tweet._meta}
         return render(request, 'admin/classification/upload_csv.html', context)
