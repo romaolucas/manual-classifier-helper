@@ -60,31 +60,3 @@ def generate_csv(request):
             writer.writerow([tweet.tweet_username, tweet.tweet_text, tweet.review_set.all()[0].review])
     logger.info("csv gerado!")
     return response 
-
-def import_csv(request):
-    if request.method == 'POST':
-        logger = logging.getLogger('testlogger')
-        form = CSVUploadForm(request.POST, request.FILES)
-        logger.info("form {}".format(form))
-        if form.is_valid():
-            csvfile = request.FILES['csv_file']
-            csvfile.open()
-            reader = csv.DictReader(codecs.EncodedFile(csvfile, "utf-8"), delimiter=',')
-            logger.info("importando csv")
-            for row in reader:
-                try:
-                    tweet_id = int(row['id'])
-                except ValueError:
-                    tweet_id = 000000000
-                tweet = Tweet(tweet_id=tweet_id, tweet_username=row['username'], tweet_text=row['text'])
-                logger.info("criando o tweet")
-                tweet.save()
-            logger.info("importei tudo do csv")
-            return redirect('admin:index')
-        else:
-            return redirect('admin:index')
-    else:
-        form = CSVUploadForm()
-        context = {'form': form,
-                    'opts': Tweet._meta}
-        return render(request, 'admin/classification/upload_csv.html', context)
