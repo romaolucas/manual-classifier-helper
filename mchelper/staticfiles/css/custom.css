@@ -16,3 +16,12 @@ ul {
     margin-left: 25px;
     margin-bottom: 15px;
 }
+
+.header-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.footer {
+    background-color: #EEE9E9;
+}

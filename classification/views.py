@@ -54,9 +54,10 @@ def generate_csv(request):
     response['Content-Disposition'] = 'attachment; filename="tweets_classificados.csv"'
     writer = csv.writer(response)
     writer.writerow(['username', 'tweet', 'review'])
-    reviewed_tweets = Tweet.objects.filter(review__isnull=False)
+    reviewed_tweets = Tweet.objects.filter(review__isnull=False) \
+        .filter(review__ironic=False)
     for tweet in reviewed_tweets:
-        if not tweet.review_set.all()[0].is_ironic():
-            writer.writerow([tweet.tweet_username, tweet.tweet_text, tweet.review_set.all()[0].review])
+        logger.info("texto: {}".format(tweet.tweet_text.encode('utf-8').decode('utf-8')))
+        writer.writerow([tweet.tweet_username, tweet.tweet_text.encode('utf-8').decode('utf-8'), tweet.review_set.all()[0].review])
     logger.info("csv gerado!")
     return response 
