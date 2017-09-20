@@ -24,4 +24,12 @@ ul {
 
 .footer {
     background-color: #EEE9E9;
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
 }
+
+    .footer-content {
+        padding-top: 20px;
+    }
