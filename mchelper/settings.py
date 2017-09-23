@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^*zf8c8!(lskt6s09$rhrtgcm)k&8i9nyv+h@kefu0(@n*#gps'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.1.1', 'tweets-classifier.herokuapp.com']
 
