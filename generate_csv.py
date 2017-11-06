@@ -1,6 +1,11 @@
 import csv
+import django
+import os
 import codecs
 from classification.models import Tweet, Review
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mchelper.settings")
+django.setup()
 
 with open('output_clam.csv', mode='w') as output:
     reviewed_tweets = Tweet.objects.filter(review__isnull=False) \
