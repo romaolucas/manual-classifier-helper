@@ -1,6 +1,6 @@
 #run this script to import the csv data
-
 from classification.models import Tweet
+from mchelper import settings
 import csv
 
 with open("output_got_clean.csv", "r") as csvfile:

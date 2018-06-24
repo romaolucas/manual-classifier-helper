@@ -5,13 +5,13 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.forms import formset_factory
 from .models import Tweet, Review
-from .forms import ReviewForm, CSVUploadForm
+from .forms import ReviewForm, ReviewFormSet, CSVUploadForm
 
 def index(request):
     return render(request, 'classification/index.html', None)
 
 def review(request):
-    ReviewFormset = formset_factory(ReviewForm, extra=0)
+    Formset = formset_factory(ReviewForm, formset=ReviewFormSet, extra=0)
     logger = logging.getLogger('testlogger')
     if request.method == 'POST':
         review_formset = ReviewFormset(request.POST)
@@ -34,8 +34,8 @@ def review(request):
     else:
         tweets_amount = int(request.GET['tweets_amount'])
         tweets_to_review = Tweet.objects.filter(review__isnull=True)[:tweets_amount]
-        initial_values = [{'tweet': tweet.pk, 'tweet_text': tweet.tweet_text} for tweet in tweets_to_review]
-        review_formset = ReviewFormset(initial=initial_values)
+        review_formset = Formset(initial=[{'tweet': tweet.pk} for tweet in tweets_to_review],\
+                tweets=tweets_to_review)
         context = {'review_formset': review_formset}
         return render(request, 'classification/review.html', context)
 
